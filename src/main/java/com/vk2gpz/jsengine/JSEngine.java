@@ -16,13 +16,18 @@ public final class JSEngine extends JavaPlugin {
 	private static ScriptEngine ENGINE;
 
 	static {
+		ENGINE = getEngine();
+	}
+
+	private static ScriptEngine getEngine() {
 		ScriptEngineManager manager = new ScriptEngineManager();
-		ENGINE = manager.getEngineByExtension("js");
-		if (ENGINE == null) {
+		ScriptEngine engine = manager.getEngineByExtension("js");
+		if (engine == null) {
 			ScriptEngineFactory factory = new NashornScriptEngineFactory();
 			manager.registerEngineName(ENGINE_NAME, factory);
-			ENGINE = manager.getEngineByName(ENGINE_NAME);
+			engine = manager.getEngineByName(ENGINE_NAME);
 		}
+		return engine;
 	}
 
 	@Override
@@ -36,13 +41,6 @@ public final class JSEngine extends JavaPlugin {
 	}
 
 	public static ScriptEngine getNewEngine() {
-		ScriptEngineManager manager = new ScriptEngineManager();
-		ScriptEngine engine = manager.getEngineByExtension("js");
-		if (engine == null) {
-			ScriptEngineFactory factory = new NashornScriptEngineFactory();
-			manager.registerEngineName(ENGINE_NAME, factory);
-			engine = manager.getEngineByName(ENGINE_NAME);
-		}
-		return engine;
+		return getEngine();
 	}
 }
