@@ -1,0 +1,6 @@
+name: ${project.name}
+main: ${project.group}.${project.name}
+version: ${project.version}
+author: vk2gpz
+api-version: 1.13
+load: STARTUP
