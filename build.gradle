@@ -1,0 +1,56 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+    id 'java'
+    id 'maven-publish'
+}
+
+// use publishToGithub to push it to maven-private
+defaultTasks 'clean', 'shadowJar' //, 'publish'
+
+group 'com.vk2gpz.jsengine'
+version '2.0.1'
+
+ext {
+    spigot_version = '1.16.5'
+    spigotapi_version = spigot_version + '-R0.1-SNAPSHOT'
+    nashorn_version = '15.2'
+    objectweb_version = '7.3.1'
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" } // spigot repo
+}
+
+dependencies {
+    implementation group: 'org.spigotmc', name: 'spigot-api', version: spigotapi_version
+    implementation group: 'org.openjdk.nashorn', name: 'nashorn-core', version: nashorn_version
+    implementation group: 'org.ow2.asm', name: 'asm', version: objectweb_version
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+// Replace text in plugin.yml
+processResources {
+    with copySpec {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE // allow duplicates
+        from sourceSets.main.resources.srcDirs
+        filter { String line -> line.replace('${project.group}', project.group) }
+        filter { String line -> line.replace('${project.version}', project.version) }
+        filter { String line -> line.replace('${project.name}', project.name) }
+    }
+}
+
+/**************** Shadow ****************/
+shadowJar {
+    baseName = project.name
+    classifier = null
+    version = project.version
+    dependencies {
+        include(dependency('org.openjdk.nashorn:nashorn-core:'))
+        include(dependency('org.ow2.asm:'))
+    }
+}
