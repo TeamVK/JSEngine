@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class JSEngine {
+    private JSEngine() {
+    }
+
     private static List<String> ENGINE_NAMEs;
     private static ScriptEngineManager MANAGER;
     private static ScriptEngineFactory FACTORY;
@@ -33,22 +36,29 @@ public class JSEngine {
     static void setNames(List<String> names) {
         if (names.size() > 0) {
             ENGINE_NAMEs = names.stream().collect(Collectors.toList());
-            init();
+            if (MANAGER != null) {
+                setFactory(MANAGER);
+            }
         }
     }
 
-    private static void init() {
-        MANAGER = new ScriptEngineManager();
+    private static void setFactory(ScriptEngineManager manager) {
         if (FACTORY == null) {
             FACTORY = new NashornScriptEngineFactory();
         }
         ENGINE_NAMEs.stream()
-                .forEach(n -> MANAGER.registerEngineName(n, FACTORY));
+                .forEach(n -> manager.registerEngineName(n, FACTORY));
+    }
+
+    static void setScriptEngineManager(ScriptEngineManager manager) {
+        MANAGER = manager;
+        setFactory(MANAGER);
     }
 
     public static ScriptEngineManager getScriptEngineManager() {
         if (MANAGER == null) {
-            init();
+            MANAGER = new ScriptEngineManager();
+            setFactory(MANAGER);
         }
         return MANAGER;
     }
