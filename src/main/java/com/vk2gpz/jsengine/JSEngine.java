@@ -1,46 +1,59 @@
 package com.vk2gpz.jsengine;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public final class JSEngine extends JavaPlugin {
-	private final static Logger LOGGER = Logger.getLogger("JSEngine");
-	private final static String ENGINE_NAME = "Nashorn";
-	private static ScriptEngine ENGINE;
+public class JSEngine {
+    private static List<String> ENGINE_NAMEs;
+    private static ScriptEngineManager MANAGER;
+    private static ScriptEngineFactory FACTORY;
 
-	static {
-		ENGINE = getEngine();
-	}
+    static {
+        setNames(new ArrayList<>(
+                Arrays.asList(
+                        "js",
+                        "JS",
+                        "javascript",
+                        "JavaScript",
+                        "ecmascript",
+                        "ECMAScript",
+                        "nashorn",
+                        "Nashorn"
+                ))
+        );
+    }
 
-	private static ScriptEngine getEngine() {
-		ScriptEngineManager manager = new ScriptEngineManager();
-		ScriptEngine engine = manager.getEngineByExtension("js");
-		if (engine == null) {
-			ScriptEngineFactory factory = new NashornScriptEngineFactory();
-			manager.registerEngineName(ENGINE_NAME, factory);
-			engine = manager.getEngineByName(ENGINE_NAME);
-		}
-		return engine;
-	}
+    static void setNames(List<String> names) {
+        if (names.size() > 0) {
+            ENGINE_NAMEs = names.stream().collect(Collectors.toList());
+            init();
+        }
+    }
 
-	@Override
-	public void onEnable() {
-		PluginDescriptionFile pdfile = getDescription();
-		LOGGER.info(pdfile.getName() + " version " + pdfile.getVersion() + " is Enabled");
-	}
+    private static void init() {
+        MANAGER = new ScriptEngineManager();
+        if (FACTORY == null) {
+            FACTORY = new NashornScriptEngineFactory();
+        }
+        ENGINE_NAMEs.stream()
+                .forEach(n -> MANAGER.registerEngineName(n, FACTORY));
+    }
 
-	public static ScriptEngine getSharedEngine() {
-		return ENGINE;
-	}
+    public static ScriptEngineManager getScriptEngineManager() {
+        if (MANAGER == null) {
+            init();
+        }
+        return MANAGER;
+    }
 
-	public static ScriptEngine getNewEngine() {
-		return getEngine();
-	}
+    public static ScriptEngine getEngine() {
+        return getScriptEngineManager().getEngineByName(ENGINE_NAMEs.get(0));
+    }
 }

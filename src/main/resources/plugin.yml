@@ -1,5 +1,5 @@
 name: ${project.name}
-main: ${project.group}.${project.name}
+main: ${project.group}.${project.name}Plugin
 version: ${project.version}
 author: vk2gpz
 api-version: 1.13

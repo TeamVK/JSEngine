@@ -1,4 +1,5 @@
 import com.vk2gpz.jsengine.JSEngine;
+import com.vk2gpz.jsengine.JSEnginePlugin;
 import org.junit.Test;
 
 import javax.script.Invocable;
@@ -12,7 +13,7 @@ public class JSEngineTest {
 
     @Test
     public void testJSEngine() {
-        ScriptEngine engine = JSEngine.getSharedEngine();
+        ScriptEngine engine = JSEnginePlugin.getSharedEngine();
         try {
             if (engine != null) {
                 try {
@@ -44,7 +45,7 @@ public class JSEngineTest {
         try {
             if (engine != null) {
                 try {
-                    ScriptEngine engine1 = JSEngine.getNewEngine();
+                    ScriptEngine engine1 = JSEnginePlugin.getNewEngine();
                     engine1.eval("function hello() {\n" +
                             "    print(\"func1\");\n" +
                             "    return \"func1\";\n" +
@@ -52,7 +53,7 @@ public class JSEngineTest {
                     Object result1 = ((Invocable) engine1).invokeFunction("hello");
                     assertEquals("func1", result1);
 
-                    ScriptEngine engine2 = JSEngine.getNewEngine();
+                    ScriptEngine engine2 = JSEnginePlugin.getNewEngine();
                     engine2.eval("function hello() {\n" +
                             "    print(\"func2\");\n" +
                             "    return \"func2\";\n" +
