@@ -44,7 +44,7 @@ if (engine != null) {
 
 3) use JSEngine through Bukkit's ServicesManager
 ```
-ServicesManager servicesManager = Bukkit.getServer().getServicesManager().getRegistration(ScriptEngineManager.class);
+RegisteredServiceProvider<ScriptEngineManager> servicesManager = Bukkit.getServer().getServicesManager().getRegistration(ScriptEngineManager.class);
 ScriptEngineManager scriptEngineManager = servicesManager.getProvider();
 ScriptEngine engine = scriptEngineManager.getEngineByName("js");
 try {
