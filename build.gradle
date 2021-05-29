@@ -4,7 +4,6 @@ plugins {
     id 'maven-publish'
 }
 
-// use publishToGithub to push it to maven-private
 defaultTasks 'clean', 'shadowJar' //, 'publish'
 
 group 'com.vk2gpz.jsengine'
