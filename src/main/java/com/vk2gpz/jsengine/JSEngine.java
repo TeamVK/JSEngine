@@ -17,6 +17,7 @@ public class JSEngine {
     private static List<String> ENGINE_NAMEs;
     private static ScriptEngineManager MANAGER;
     private static ScriptEngineFactory FACTORY;
+    private static boolean USE_OpenJDK_NASHORN;
 
     static {
         setNames(new ArrayList<>(
@@ -33,6 +34,10 @@ public class JSEngine {
         );
     }
 
+    static void useOpenJDKNashorn(boolean use) {
+        USE_OpenJDK_NASHORN = use;
+    }
+
     static void setNames(List<String> names) {
         if (names.size() > 0) {
             ENGINE_NAMEs = names.stream().collect(Collectors.toList());
@@ -44,8 +49,22 @@ public class JSEngine {
 
     private static void setFactory(ScriptEngineManager manager) {
         if (FACTORY == null) {
-            FACTORY = new NashornScriptEngineFactory();
+            for (ScriptEngineFactory factory : manager.getEngineFactories()) {
+                if (factory.getLanguageName().equalsIgnoreCase("ECMAScript")) {
+                    FACTORY = factory;
+                }
+            }
+            if (FACTORY == null) {
+                useOpenJDKNashorn(true);
+            }
         }
+
+        if (USE_OpenJDK_NASHORN) {
+            if (FACTORY == null || !(FACTORY instanceof NashornScriptEngineFactory)) {
+                FACTORY = new NashornScriptEngineFactory();
+            }
+        }
+
         ENGINE_NAMEs.stream()
                 .forEach(n -> manager.registerEngineName(n, FACTORY));
     }
@@ -58,8 +77,10 @@ public class JSEngine {
     public static ScriptEngineManager getScriptEngineManager() {
         if (MANAGER == null) {
             MANAGER = new ScriptEngineManager();
-            if (MANAGER.getEngineByName("JavaScript") == null)
-                setFactory(MANAGER);
+            if (MANAGER.getEngineByName("JavaScript") == null) {
+                useOpenJDKNashorn(true);
+            }
+            setFactory(MANAGER);
         }
         return MANAGER;
     }

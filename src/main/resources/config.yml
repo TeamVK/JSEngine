@@ -8,3 +8,6 @@ script_engine_names:
   - nashorn
   - Nashorn
 
+# if this option is true, even if ScriptEngineManager already has a factory
+# for JavaScript, this plugin will try to replace it with openjdk nashorn.
+ForceNashorn: false

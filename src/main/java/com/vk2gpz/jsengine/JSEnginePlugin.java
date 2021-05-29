@@ -24,6 +24,7 @@ public final class JSEnginePlugin extends JavaPlugin {
         ServicesManager servicesManager = getServer().getServicesManager();
         ScriptEngineManager scriptEngineManager;
 
+        JSEngine.useOpenJDKNashorn(getConfig().getBoolean("ForceNashorn", false));
         if (servicesManager.isProvidedFor(ScriptEngineManager.class)) {
             RegisteredServiceProvider<ScriptEngineManager> registered = servicesManager.getRegistration(ScriptEngineManager.class);
             scriptEngineManager = registered.getProvider();
@@ -39,6 +40,7 @@ public final class JSEnginePlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         PluginDescriptionFile pdfile = getDescription();
         LOGGER.info(pdfile.getName() + " version " + pdfile.getVersion() + " is Enabled");
     }
