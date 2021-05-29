@@ -1,15 +1,15 @@
-import com.vk2gpz.jsengine.JSEngine;
 import com.vk2gpz.jsengine.JSEnginePlugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.plugin.ServicesManager;
 import org.junit.Test;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
-
-import java.io.FileReader;
+import javax.script.ScriptEngineManager;
 
 import static org.junit.Assert.*;
 
-public class JSEngineTest {
+public class JSEnginePluginTest {
 
     @Test
     public void testJSEngine() {

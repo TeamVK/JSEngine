@@ -44,9 +44,15 @@ if (engine != null) {
 
 3) use JSEngine through Bukkit's ServicesManager
 ```
+ServicesManager servicesManager = getServer().getServicesManager();
+if (!servicesManager.isProvidedFor(ScriptEngineManager.class)) {
+	ScriptEngineManager manager = new ScriptEngineManager();
+	servicesManager.register(ScriptEngineManager.class, manager, this, ServicePriority.Highest);
+}
+
 RegisteredServiceProvider<ScriptEngineManager> servicesManager = Bukkit.getServer().getServicesManager().getRegistration(ScriptEngineManager.class);
 ScriptEngineManager scriptEngineManager = servicesManager.getProvider();
-ScriptEngine engine = scriptEngineManager.getEngineByName("js");
+ScriptEngine engine = scriptEngineManager.getEngineByName("nashorn");
 try {
     engine.eval("your script");
 } catch (javax.script.ScriptException ex) {

@@ -58,7 +58,8 @@ public class JSEngine {
     public static ScriptEngineManager getScriptEngineManager() {
         if (MANAGER == null) {
             MANAGER = new ScriptEngineManager();
-            setFactory(MANAGER);
+            if (MANAGER.getEngineByName("JavaScript") == null)
+                setFactory(MANAGER);
         }
         return MANAGER;
     }
