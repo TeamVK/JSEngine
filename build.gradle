@@ -7,10 +7,10 @@ plugins {
 defaultTasks 'clean', 'shadowJar' //, 'publish'
 
 group 'com.vk2gpz.jsengine'
-version '3.0.3'
+version '3.0.4'
 
 ext {
-    spigot_version = '1.16.5'
+    spigot_version = '1.17'
     spigotapi_version = spigot_version + '-R0.1-SNAPSHOT'
     nashorn_version = '15.2'
     objectweb_version = '7.3.1'
