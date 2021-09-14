@@ -10,7 +10,7 @@ group 'com.vk2gpz.jsengine'
 version '3.0.5'
 
 ext {
-    spigot_version = '1.17'
+    spigot_version = '1.17.1'
     spigotapi_version = spigot_version + '-R0.1-SNAPSHOT'
     nashorn_version = '15.3'
     objectweb_version = '7.3.1'
