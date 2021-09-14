@@ -7,7 +7,7 @@ plugins {
 defaultTasks 'clean', 'shadowJar' //, 'publish'
 
 group 'com.vk2gpz.jsengine'
-version '3.0.4'
+version '3.0.5'
 
 ext {
     spigot_version = '1.17'
