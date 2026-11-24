@@ -4,6 +4,15 @@ However, some plugins do use JavaScript engine to process various JavaScript cod
 
 This plugin simply wraps openjdk's nashorn JavaScript engine and makes it available to other plugins.
 
+---
+### Need a Minecraft server?
+[![10% off Minecraft server hosting at RealisticNode with code VK2GPZ](assets/realisticnode-banner.png)](https://realisticnode.com/vk2gpz)
+
+Get **10% off** at [RealisticNode](https://realisticnode.com/vk2gpz) with code **`VK2GPZ`**.
+<sub>Affiliate link: I may earn a commission at no extra cost to you, which helps support development.</sub>
+
+---
+
 To use JavaScript engine, you could do something like:
 
 ```
