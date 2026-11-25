@@ -15,11 +15,8 @@ Get **10% off** at [RealisticNode](https://realisticnode.com/vk2gpz) with code *
 
 To use JavaScript engine, you could do something like:
 
-```
-To use JavaScript engine, you could do something like:
-
 1) use JSEngine.jar as a library
-[code]
+```
 import com.vk2gpz.jsengine.JSEngine;
 ...
 public class Foo {
