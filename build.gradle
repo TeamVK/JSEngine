@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "5.2.0"
+    id "com.gradleup.shadow" version "9.6.1"
     id 'java'
     id 'maven-publish'
 }
@@ -10,17 +10,18 @@ group 'com.vk2gpz.jsengine'
 version '3.0.5'
 
 ext {
-    spigot_version = '1.17.1'
+    spigot_version = '26.2'
     spigotapi_version = spigot_version + '-R0.1-SNAPSHOT'
     nashorn_version = '15.3'
     objectweb_version = '7.3.1'
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 repositories {
-    jcenter()
     mavenCentral()
     maven { url "https://hub.spigotmc.org/nexus/content/groups/public/" } // spigot repo
 }
@@ -45,9 +46,9 @@ processResources {
 
 /**************** Shadow ****************/
 shadowJar {
-    baseName = project.name
-    classifier = null
-    version = project.version
+    archiveBaseName = project.name
+    archiveClassifier = null
+    archiveVersion = project.version
     dependencies {
         include(dependency('org.openjdk.nashorn:nashorn-core:'))
         include(dependency('org.ow2.asm:'))
